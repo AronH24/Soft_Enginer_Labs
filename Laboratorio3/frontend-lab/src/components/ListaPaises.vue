@@ -17,7 +17,7 @@
                 <tr v-for="(pais,index) of paises" :key="index">
                     <td>{{ pais.nombre }}</td>
                     <td>{{ pais.continente }}</td>
-                    <td>{{ pais.Idioma }}</td>
+                    <td>{{ pais.idioma }}</td>
                     <td>
                         <button class="btn btn-secondary btn-sm">Editar</button>
                         <button class="btn btn-danger btn-sm" @click="deleteCountry(index)">Eliminar</button>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+    import axios from "axios";
     export default {
         name: "ListaPaises",
         data() {
@@ -48,8 +49,20 @@
         methods: {
             deleteCountry(index) {
                 this.paises.splice(index, 1);
+            },
+
+            obtenerTareas() {
+                axios.get("https://localhost:7265/api/Paises").then(
+                (response) => {
+                this.paises = response.data;
+                });
             }
         },
+
+        created: function () {
+            this.obtenerTareas();
+        },
+
     };
 </script>
 
