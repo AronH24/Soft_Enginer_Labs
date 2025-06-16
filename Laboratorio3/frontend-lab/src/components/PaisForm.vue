@@ -5,6 +5,8 @@ vh-100">
   width: 100%">
     <h3 class="text-center">Formulario de creación de
     países</h3>
+
+    <div v-if="mensajeConfirmacion" class="alert alert-success text-center mt-3"> {{ mensajeConfirmacion }} </div>
     <form @submit.prevent="guardarPais">
       <div class="form-group">
         <label for="nombre">Nombre:</label>
@@ -66,6 +68,7 @@ vh-100">
                     continente: "",
                     idioma: "",
                 },
+                mensajeConfirmacion: "",
             };
         },
         methods: {
@@ -77,9 +80,13 @@ vh-100">
                 continente: this.datosFormulario.continente,
                 idioma: this.datosFormulario.idioma,
               })
-              .then(function (response) {
+              .then((response) => {
                 console.log(response);
-                window.location.href = "/";
+                this.mensajeConfirmacion = "El país fue agregado con éxito!";
+
+                setTimeout(() => {
+                  window.location.href = "/";
+                }, 3000);
               })
               .catch(function (error) {
                 console.log(error);
